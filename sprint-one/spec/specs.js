@@ -33,7 +33,7 @@ define([
     describe('stack shared behavior', function() {
 
       verifyClass(instantiator).followsPattern(variant, {}, prototypeOfInstances);
-/*
+
       it('reports a size of zero for a new stack', function() {
         expect(stack.size()).to.equal(0);
       });
@@ -61,10 +61,9 @@ define([
         stack.pop();
         expect(stack.size()).to.equal(0);
       });
-*/
+
       it('allows sequentially additing and removing items', function() {
         stack.push('a');
-        //stack.pop() equals to undefined...... why...?
         expect(stack.pop()).to.equal('a');
         stack.push('b');
         expect(stack.pop()).to.equal('b');

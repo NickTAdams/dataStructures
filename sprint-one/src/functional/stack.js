@@ -4,22 +4,20 @@ var Stack = function() {
   // Use an object with numeric keys to store values
   var storage = {};
   var count = 0;
-  // Implement the methods below
-  //What if we need to use this empty object storage? So even if we pop something
-  //we can still access it in the storage?
-
+/*
+‣
+AssertionError: expected true to be false// This
+test could fail if the word "this" is found inside comments,
+// or if there are opening/closing braces ("{", "}") in comments inside the constructor.
+*/
   someInstance.push = function(value) {
     count += 1;
     storage[count] = value;
-    //console.log(storage)
   };
 
-//if stack.pop is called, we should return what was last pushed.
   someInstance.pop = function() {
     count -= 1;
-    //how do you return the last object prop-val
-    //return storage[count - 1];
-    console.log(storage)
+     return storage[count + 1];
   };
 
   someInstance.size = function() {
