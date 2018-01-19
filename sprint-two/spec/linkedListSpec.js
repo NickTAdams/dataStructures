@@ -5,6 +5,7 @@ describe('linkedList', function() {
     linkedList = LinkedList();
   });
 
+
   it('should have a head and tail', function() {
     expect(linkedList).to.have.property('head');
     expect(linkedList).to.have.property('tail');
