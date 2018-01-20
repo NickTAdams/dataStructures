@@ -7,11 +7,11 @@ var Graph = function() {
 
 // Add a node to the graph, passing in the node's value.
 Graph.prototype.addNode = function(node) {
-  var newNode = {};
-  newNode.value = node;
-  newNode.edges = [];
+  var newNode = {
+    value: node,
+    edges: []
+  };
   this.masterList.push(newNode);
-
   return newNode;
 };
 
@@ -125,6 +125,13 @@ Graph.prototype.hasEdge = function(fromNode, toNode) {
 // Connects two nodes in a graph by adding an edge between them.
 Graph.prototype.addEdge = function(fromNode, toNode) {
  
+  if(typeof fromNode === 'object') {
+    fromNode = fromNode.value;
+  }
+  if(typeof toNode === 'object') {
+    toNode = toNode.value;
+  }
+
 //why can this not have a node add itself?
  var node1 = undefined;
  var node2 = undefined;
@@ -171,7 +178,7 @@ Graph.prototype.forEachNode = function(cb) {
 //     var item;
 //     cb(this.masterList[i]);
 //   }
-  _.each(this.masterList, cb);
+  this.masterList.forEach(cb);
 };
 
 /*
@@ -182,19 +189,7 @@ Graph.prototype.forEachNode = function(cb) {
 //   graph.addEdge(item, 5);
 // };
 
-var test = function(item){
-console.log('TEST:', item);
-}
- var graph = new Graph();
-    // var connectToFive = function(item) {
-    //   graph.addEdge(item, 5);
-    // };
-
-    graph.addNode(5);
-    graph.addNode(2);
-    graph.addNode(1);
-    graph.addNode(3);
-    // graph.forEachNode(connectToFive);
 
 
-console.log(graph.forEachNode(test));
+
+// console.log(graph.forEachNode(test));
