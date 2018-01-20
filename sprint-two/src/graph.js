@@ -3,15 +3,16 @@
 // Instantiate a new graph
 var Graph = function() {
   this.masterList = [];
-  //this.edges = [];
 };
 
 // Add a node to the graph, passing in the node's value.
 Graph.prototype.addNode = function(node) {
-  var newNode = new Graph();
+  var newNode = {};
   newNode.value = node;
+  newNode.edges = [];
   this.masterList.push(newNode);
-  return node;
+
+  return newNode;
 };
 
 // Return a boolean value indicating if the value passed to contains is represented in the graph.
@@ -39,7 +40,7 @@ Graph.prototype.removeNode = function(target) {
   var removeThis;
   for(var i = 0; i < this.masterList.length; i++) {
     if(this.masterList[i].value === target) {
-      removedEdges = this.masterList[i].masterList;
+      removedEdges = this.masterList[i].edges;
       removeThis = i;
     }
   }
@@ -52,9 +53,9 @@ Graph.prototype.removeNode = function(target) {
 //look into removedEdges.edge
 
   for(let i = 0; i < removedEdges.length; i++) {
-    for(let x = 0; x < removedEdges[i].masterList.length; x++) {
-        if(removedEdges[i].masterList[x].value === target) {
-          removedEdges[i].masterList.splice(x, 1);
+    for(let x = 0; x < removedEdges[i].length; x++) {
+        if(removedEdges[i].edges[x].value === target) {
+          removedEdges[i].edges.splice(x, 1);
         }
     }
   }
@@ -97,18 +98,20 @@ Graph.prototype.hasEdge = function(fromNode, toNode) {
         node2 = this.masterList[i];
     }
   }
-  for(var i = 0; i < node1.masterList.length; i++) {
-      if(node1.masterList[i].value === toNode) {
+  for(var i = 0; i < node1.edges.length; i++) {
+      if(node1.edges[i].value === toNode) {
         result1 = true;
       } 
   }
    
  //check this later.
   if(node2){
-    for(var i = 0; i < node2.masterList.length; i++) {
-        if(node2.masterList[i].value === fromNode) {
-          result2 = true;
+    for(var i = 0; i < node2.edges.length; i++) {
+      if(node2.edges[i]) {
+        if(node2.edges[i].value === fromNode) {
+           result2 = true;
         } 
+      } 
     }
   }
   if (result1 && result2) {    
@@ -120,15 +123,23 @@ Graph.prototype.hasEdge = function(fromNode, toNode) {
 
 // Connects two nodes in a graph by adding an edge between them.
 Graph.prototype.addEdge = function(fromNode, toNode) {
-  for (var i = 0; i < this.masterList.length; i++) {
+ 
+//why can this not have a node add itself?
+ var node1 = undefined;
+ var node2 = undefined;
+  
+ for (var i = 0; i < this.masterList.length; i++) {
     if(this.masterList[i].value === fromNode) {
-      var node1 = this.masterList[i];
-    } else if (this.masterList[i].value === toNode) {
-      var node2 = this.masterList[i];
+      node1 = this.masterList[i];
+    } 
+    if (this.masterList[i].value === toNode) {
+      node2 = this.masterList[i];
     }
   }
-  node1.masterList.push(node2);
-  node2.masterList.push(node1);
+  node1.edges.push(node2);
+  if(fromNode !== toNode) {
+    node2.edges.push(node1);
+  }
 };
 
 // Remove an edge between any two specified (by value) nodes.
@@ -140,30 +151,38 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
       var node2 = this.masterList[i];
     }
   }
-  for(var i = 0; i < node1.masterList.length; i++) {
-    if(node1.masterList[i].value === toNode) {
-      node1.masterList.splice(i, 1);
+  for(var i = 0; i < node1.edges.length; i++) {
+    if(node1.edges[i].value === toNode) {
+      node1.edges.splice(i, 1);
     }
   }
-  for(var i = 0; i < node2.masterList.length; i++) {
-    if(node2.masterList[i].value === fromNode) {
-      node2.masterList.splice(i, 1);
+  for(var i = 0; i < node2.edges.length; i++) {
+    if(node2.edges[i].value === fromNode) {
+      node2.edges.splice(i, 1);
     }
   }
 };
 
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb) {
-
+ 
+// for (let i = 0; i < this.masterList.length; i++) {
+//     var item;
+//     cb(this.masterList[i]);
+//   }
+  _.each(this.masterList, cb);
 };
 
 /*
  * Complexity: What is the time complexity of the above functions?
  */
 
-
+// var connectToFive = function(item) {
+//   graph.addEdge(item, 5);
+// };
 // var graph = new Graph();
 // graph.addNode(4);
 // graph.addNode(5);
 // graph.addEdge(5, 4);
-// graph.removeNode(5);
+// graph.forEachNode(connectToFive)
+//graph.removeNode(5);
