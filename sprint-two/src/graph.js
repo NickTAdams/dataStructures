@@ -94,7 +94,8 @@ Graph.prototype.hasEdge = function(fromNode, toNode) {
   for(var i = 0; i < this.masterList.length; i++) {
     if(this.masterList[i].value === fromNode) {
         node1 = this.masterList[i];
-    } else if (this.masterList[i].value === toNode) {
+    } 
+    if (this.masterList[i].value === toNode) {
         node2 = this.masterList[i];
     }
   }
@@ -180,9 +181,20 @@ Graph.prototype.forEachNode = function(cb) {
 // var connectToFive = function(item) {
 //   graph.addEdge(item, 5);
 // };
-// var graph = new Graph();
-// graph.addNode(4);
-// graph.addNode(5);
-// graph.addEdge(5, 4);
-// graph.forEachNode(connectToFive)
-//graph.removeNode(5);
+
+var test = function(item){
+console.log('TEST:', item);
+}
+ var graph = new Graph();
+    // var connectToFive = function(item) {
+    //   graph.addEdge(item, 5);
+    // };
+
+    graph.addNode(5);
+    graph.addNode(2);
+    graph.addNode(1);
+    graph.addNode(3);
+    // graph.forEachNode(connectToFive);
+
+
+console.log(graph.forEachNode(test));
