@@ -3,7 +3,7 @@ var LinkedList = function() {
   list.head = null;
   list.tail = null;
   
-  list.count = 0; //keeps track of how many nodes we have
+   //keeps track of how many nodes we have
   //everytime we make something new, we update the count prop
     
   
@@ -15,8 +15,7 @@ var LinkedList = function() {
   // node itself looks like its a function class.
   //Node takes on a value as an argument.  
     var node = new Node(value);
-    this.count++;
-    if (this.count === 1) {
+    if (this.head === null) {
       this.head = node;
       this.tail = node;
     } else {
